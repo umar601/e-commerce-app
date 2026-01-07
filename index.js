@@ -6,6 +6,7 @@ const port = 8080;
 
 const dataBaseConnection = require("./databaseConnection");
 const middleware = require("./middlewares/middleware");
+const adminRouter = require("./routes/adminRoute");
 
 
 dataBaseConnection()
@@ -21,10 +22,20 @@ dataBaseConnection()
 middleware(app);
 
 
-app.use("/",(req,res)=>{
+// app.use((err,req,res,next)=>{
 
-    res.send("working");
-})
+//     console.log("error");
+// })
+
+
+// console.log(adminRouter.adminLogin);
+
+
+app.use("/",adminRouter);
+
+app.use("/",(req,res)=>{
+    res.send("workd")
+});
 
 
 app.listen(port,()=>{

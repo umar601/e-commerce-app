@@ -5,6 +5,7 @@ const localStorage = require("passport-local");
 const methodOverride = require("method-override");
 const expressSession = require("express-session");
 const cookie_parser = require("cookie-parser");
+const flash = require("connect-flash");
 
 const admin = require("../models/adminmodel")
 
@@ -49,7 +50,7 @@ function middleware(app){
   //   }
   // }));
 
-    
+    app.use(flash());
 
 
     app.use(passport.initialize());
@@ -63,6 +64,14 @@ function middleware(app){
 
     passport.serializeUser(admin.serializeUser());
     passport.deserializeUser(admin.deserializeUser());
+
+    app.use((req,res,next)=>{
+
+        res.locals.success = req.flash("success");
+        res.locals.faliure = req.flash("error")
+        next()
+
+    })
 
 }
 
