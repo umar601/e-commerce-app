@@ -57,20 +57,65 @@ function middleware(app){
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.use("admin-local", admin.createStrategy());
-    // passport.serializeUser(admin.serializeUser());
-    // passport.deserializeUser(admin.deserializeUser());
+    
+    passport.use("admin-local", new localStorage({usernameField:"email"},admin.authenticate()));
+
+    passport.use("user-local",new localStorage({usernameField:"email"},user.authenticate()));
 
 
-    passport.use("user-local", user.createStrategy());
-    passport.serializeUser(user.serializeUser());
-    passport.deserializeUser(user.deserializeUser());
+    passport.serializeUser((userObj,done)=>{
+        const type = userObj instanceof admin ? "admin" :"user"
+        done(null,{id:userObj._id,type})
+    });
+
+    passport.deserializeUser(async (userObj,done)=>{
+
+        try{
+
+        if(userObj.type=="admin"){
+            const adminUser = await admin.findById(userObj.id);
+            return done(null,adminUser);
+        }
+        else{
+            const normalUser = await user.findById(userObj.id);
+            return done(null,normalUser)
+
+        }
+
+    }
+    catch(err){
+        done(err);
+    }
+    })
+   
+
+//     passport.serializeUser((userObj, done) => {
+
+//     const type = userObj instanceof admin ? "admin" : "user";
+//     done(null, { id: userObj._id, type });
+// });
+
+// passport.deserializeUser(async (obj, done) => {
+//     try {
+//         if (obj.type === "admin") {
+//             const adminUser = await admin.findById(obj.id);
+//             return done(null, adminUser);
+//         } else {
+//             const normalUser = await user.findById(obj.id);
+//             return done(null, normalUser);
+//         }
+//     } catch (err) {
+//         done(err);
+//     }
+//});
+
 
     app.use((req,res,next)=>{
 
         res.locals.success = req.flash("success");
-        res.locals.faliure = req.flash("error")
-        next()
+        res.locals.faliure = req.flash("error");
+        res.locals.user = req.user;
+        next();
 
     })
 

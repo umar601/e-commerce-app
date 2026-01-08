@@ -6,6 +6,16 @@ const {loginPage,signupPage,usersignup} = require("../controllers/usercontroller
 
 const passport = require("passport");
 
+
+function asyncWrap(fun){
+    return function(req,res,next){
+        fun(req,res,next)
+        .catch(
+            next(err)
+        )
+    }
+}
+
 userRouter
 .route("/user/login")
 .get(loginPage)
@@ -18,8 +28,8 @@ userRouter
 
 userRouter
 .route("/user/signup")
-.get(signupPage)
-.post(usersignup)
+.get(asyncWrap(signupPage))
+.post(asyncWrap(usersignup))
 
 
 module.exports = userRouter;

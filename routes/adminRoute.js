@@ -20,6 +20,16 @@ function isLogin(req,res,next){
 }
 
 
+function asyncWrap(fun){
+    return function(req,res,next){
+        fun(req,res,next)
+        .catch(
+            next(err)
+        )
+    }
+}
+
+
 adminRouter
 .route("/admin/login")
 .post(passport.authenticate("admin-local", {
@@ -30,9 +40,9 @@ adminRouter
     }))
 .get(adminLoginPage)
 
-adminRouter.get("/admin/post",isLogin,(req,res)=>{
-    res.send("add");
-})
+// adminRouter.get("/admin/post",isLogin,(req,res)=>{
+//     res.send("add");
+// })
 
 
 module.exports = adminRouter

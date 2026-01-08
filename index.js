@@ -8,6 +8,7 @@ const dataBaseConnection = require("./databaseConnection");
 const middleware = require("./middlewares/middleware");
 const adminRouter = require("./routes/adminRoute");
 const userRouter = require("./routes/userRoute");
+const errorClass = require("./errorClass");
 
 
 dataBaseConnection()
@@ -36,8 +37,23 @@ app.use("/",adminRouter);
 app.use("/",userRouter);
 
 app.use("/",(req,res)=>{
-    res.send("workd")
+   // console.log(req.user)
+    res.render("p.ejs")
 });
+
+app.use(/.*/, (req, res,next) => {
+    next(new errorClass(404,"pagenot found"))
+});
+
+app.use((err, req, res, next) => {
+    if (!(err instanceof errorClass)) {
+        err = new errorClass(err.status || 500, err.message || "Something went wrong");
+    }
+
+
+    res.status(err.status).render("error", { message: err.message,user:"user"});
+});
+
 
 
 app.listen(port,()=>{
