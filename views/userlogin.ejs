@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+
+    <h1>user login page</h1>
+
+    <h1><%= success %></h1>
+    <h1><%= faliure %></h1>
+
+
+    <form action="/user/login" method="post">
+
+        <input type="text" name="email" placeholder="please enter username ....">
+        <input type="password" name="password" placeholder="please enter the password ...">
+        <button>login</button>
+    </form>
+    
+</body>
+</html>

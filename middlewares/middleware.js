@@ -8,6 +8,7 @@ const cookie_parser = require("cookie-parser");
 const flash = require("connect-flash");
 
 const admin = require("../models/adminmodel")
+const user = require("../models/usermodel");
 
 
 function middleware(app){
@@ -56,14 +57,14 @@ function middleware(app){
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.use(new localStorage(admin.authenticate()));
+    passport.use("admin-local", admin.createStrategy());
+    // passport.serializeUser(admin.serializeUser());
+    // passport.deserializeUser(admin.deserializeUser());
 
-    // passport.use(new localStrategy(client.authenticate()));
 
-    
-
-    passport.serializeUser(admin.serializeUser());
-    passport.deserializeUser(admin.deserializeUser());
+    passport.use("user-local", user.createStrategy());
+    passport.serializeUser(user.serializeUser());
+    passport.deserializeUser(user.deserializeUser());
 
     app.use((req,res,next)=>{
 

@@ -22,7 +22,7 @@ function isLogin(req,res,next){
 
 adminRouter
 .route("/admin/login")
-.post(passport.authenticate("local", {
+.post(passport.authenticate("admin-local", {
         failureRedirect: "/admin/login",
         failureFlash: true,
         successRedirect: "/",

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+</head>
+<body>
+
+    <h1>user signup page</h1>
+
+    <h1><%= success %></h1>
+    <h1><%= faliure %></h1>
+
+
+    <form action="/user/signup" method="post">
+
+        <input type="text" name="email" placeholder="please enter username ....">
+        <input type="password" name="password" placeholder="please enter the password ...">
+        <button>signup</button>
+    </form>
+    
+</body>
+</html>
