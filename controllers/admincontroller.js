@@ -13,5 +13,10 @@ function adminLoginPage(req,res){
     res.render("login.ejs");
 }
 
+function toAddPost(req,res){
+    
+    res.render("adminhomepage.ejs")
+}
 
-module.exports = {adminLoginPage};
+
+module.exports = {adminLoginPage,toAddPost};

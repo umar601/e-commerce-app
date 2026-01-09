@@ -1,4 +1,4 @@
-const {adminLoginPage} = require("../controllers/admincontroller");
+const {adminLoginPage,toAddPost} = require("../controllers/admincontroller");
 const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
@@ -11,38 +11,44 @@ function isLogin(req,res,next){
 
         req.flash("error","login first");
 
-        return res.redirect("/admin/login")
+        return res.redirect("/admin/login");
     }
     else{
 
-        next();
+        return next();
     }
 }
 
 
-function asyncWrap(fun){
-    return function(req,res,next){
-        fun(req,res,next)
-        .catch(
-            next(err)
-        )
-    }
+function asyncWrap(fn) {
+    return async function (req, res, next) {
+        try {
+            await fn(req, res, next);
+        } catch (err) {
+            next(err);
+        }
+    };
 }
+
+
+
+
+
 
 
 adminRouter
 .route("/admin/login")
+.get(adminLoginPage)
 .post(passport.authenticate("admin-local", {
         failureRedirect: "/admin/login",
         failureFlash: true,
-        successRedirect: "/",
+        successRedirect: "/admin/post",
         successFlash: "Welcome admin!"
     }))
-.get(adminLoginPage)
-
-// adminRouter.get("/admin/post",isLogin,(req,res)=>{
-//     res.send("add");
-// })
 
 
-module.exports = adminRouter
+adminRouter
+.get("/admin/post",isLogin,asyncWrap(toAddPost))
+
+
+module.exports = adminRouter;
