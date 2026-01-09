@@ -1,4 +1,4 @@
-const {adminLoginPage,toAddPost} = require("../controllers/admincontroller");
+const {adminLoginPage,toAddPost,addingPost} = require("../controllers/admincontroller");
 const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
@@ -33,9 +33,6 @@ function asyncWrap(fn) {
 
 
 
-
-
-
 adminRouter
 .route("/admin/login")
 .get(adminLoginPage)
@@ -48,7 +45,10 @@ adminRouter
 
 
 adminRouter
-.get("/admin/post",isLogin,asyncWrap(toAddPost))
+.get("/admin/post",asyncWrap(toAddPost))
+.post("/admin/post",asyncWrap(addingPost))
+    
+
 
 
 module.exports = adminRouter;
