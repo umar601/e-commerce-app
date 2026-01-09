@@ -1,5 +1,6 @@
 
 const admin = require("../models/adminmodel");
+const product = require("../models/productmodel");
 
 
 function adminLoginPage(req,res){
@@ -18,11 +19,32 @@ function toAddPost(req,res){
     res.render("adminAddPost.ejs")
 }
 
-function addingPost(req,res){
+async function addingPost(req,res){
 
-    console.log(req.body)
+    const {title,description,discount,stock,price,category} = req.body;
 
-    res.send("rec")
+    const newpost = new product(
+        {
+            title:title,
+            description:description,
+            category:category,
+            discount:discount,
+            price:price,
+            stock:stock
+
+        }
+    )
+
+    for(let i=0;i<req.files.length;i++){
+
+        newpost.images.push(req.files[i].path);
+    }
+
+    await newpost.save();
+
+    req.flash("success","posted successfully");
+
+    res.redirect("/admin/post")
 }
 
 

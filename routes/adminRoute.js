@@ -2,6 +2,7 @@ const {adminLoginPage,toAddPost,addingPost} = require("../controllers/admincontr
 const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
+const uplaod = require("../middlewares/cloudUpload");
 
 
 
@@ -46,7 +47,7 @@ adminRouter
 
 adminRouter
 .get("/admin/post",asyncWrap(toAddPost))
-.post("/admin/post",asyncWrap(addingPost))
+.post("/admin/post",uplaod.array("images",10),asyncWrap(addingPost))
     
 
 
