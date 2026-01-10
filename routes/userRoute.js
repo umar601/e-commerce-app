@@ -2,19 +2,36 @@ const express = require("express");
 
 const userRouter = express.Router();
 
-const {loginPage,signupPage,usersignup} = require("../controllers/usercontroller");
+const {loginPage,signupPage,usersignup,viewPost} = require("../controllers/usercontroller");
 
 const passport = require("passport");
 
 
-function asyncWrap(fun){
-    return function(req,res,next){
-        fun(req,res,next)
-        .catch(
-            next(err)
-        )
+function asyncWrap(fn) {
+    return async function (req, res, next) {
+        try {
+            await fn(req, res, next);
+        } catch (err) {
+            next(err); // send error to Express error handler
+        }
+    };
+}
+
+
+function isLogin(req,res,next){
+
+    if(!req.isAuthenticated()){
+
+        req.flash("error","login first");
+
+        return res.redirect("/user/login");
+    }
+    else{
+
+        return next();
     }
 }
+
 
 userRouter
 .route("/user/login")
@@ -22,14 +39,21 @@ userRouter
 .post(passport.authenticate("user-local",{
     failureFlash:true,
     failureRedirect:"/user/login",
-    successFlash:true,
-    successRedirect:"/"
+    // successFlash:true,
+    // successRedirect:"/user/post"
+}),((req,res)=>{
+    req.flash("success","login successfull");
+    res.redirect("/user/post");
 }))
 
 userRouter
 .route("/user/signup")
 .get(asyncWrap(signupPage))
 .post(asyncWrap(usersignup))
+
+userRouter
+.route("/user/post")
+.get(isLogin,asyncWrap(viewPost))
 
 
 module.exports = userRouter;

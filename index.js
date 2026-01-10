@@ -38,10 +38,10 @@ middleware(app);
 app.use("/",adminRouter);
 app.use("/",userRouter);
 
-app.use("/",(req,res)=>{
-   // console.log(req.user)
-    res.render("p.ejs")
-});
+// app.use("/",(req,res)=>{
+//    // console.log(req.user)
+//     res.render("p")
+// });
 
 app.use(/.*/, (req, res,next) => {
     next(new errorClass(404,"pagenot found"))

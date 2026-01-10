@@ -8,7 +8,8 @@ const uplaod = require("../middlewares/cloudUpload");
 
 function isLogin(req,res,next){
 
-    if(!req.isAuthenticated()){
+    if(req.user.role!="admin"){
+
 
         req.flash("error","login first");
 
@@ -40,14 +41,17 @@ adminRouter
 .post(passport.authenticate("admin-local", {
         failureRedirect: "/admin/login",
         failureFlash: true,
-        successRedirect: "/admin/post",
-        successFlash: "Welcome admin!"
-    }))
+        // successRedirect: "/admin/post",
+        // successFlash: "Welcome admin!"
+}),((req,res)=>{
+    req.flash("success","login successfull");
+    res.redirect("/admin/post");
+}))
 
 
 adminRouter
-.get("/admin/post",asyncWrap(toAddPost))
-.post("/admin/post",uplaod.array("images",10),asyncWrap(addingPost))
+.get("/admin/post",isLogin,asyncWrap(toAddPost))
+.post("/admin/post",isLogin,uplaod.array("images",10),asyncWrap(addingPost))
     
 
 

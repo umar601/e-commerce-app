@@ -1,5 +1,6 @@
 
 const user = require("../models/usermodel");
+const product = require("../models/productmodel");
 
 function loginPage (req,res){
     
@@ -41,4 +42,13 @@ async function usersignup(req,res) {
 }
 
 
-module.exports = {loginPage,signupPage,usersignup}
+async function viewPost(req,res){
+
+    let allPost = await product.find({});
+
+    res.render("viewPostUser.ejs",{allPost});
+
+}
+
+
+module.exports = {loginPage,signupPage,usersignup,viewPost}
