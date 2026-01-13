@@ -18,7 +18,7 @@
         <% for (post of allPost) { %>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-70 shadow-sm">
+            <a href="post/view/<%= post._id %>" style="text-decoration: none;"><div class="card h-70 shadow-sm" >
 
                 <img src="<%= post.images[0] %>" height="390px" width="100%" alt="cover photo">
 
@@ -43,6 +43,7 @@
                         <span class="badge bg-warning text-dark ms-1"><%= post.discount %>% OFF</span>
                     <% } %>
                 </div>
+                </a>
 
             </div>
         </div>

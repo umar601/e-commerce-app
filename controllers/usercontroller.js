@@ -50,5 +50,20 @@ async function viewPost(req,res){
 
 }
 
+async function viewSpecficPost(req,res){
 
-module.exports = {loginPage,signupPage,usersignup,viewPost}
+    let {id} = req.params;
+
+    // console.log("W")
+
+    // console.log(id)
+
+    let post = await product.findById(id);
+
+    res.render("viewSpecficpost",{post});
+
+
+}
+
+
+module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost}
