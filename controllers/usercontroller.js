@@ -1,6 +1,7 @@
 
 const user = require("../models/usermodel");
 const product = require("../models/productmodel");
+const review = require("../models/reviewmodel");
 
 function loginPage (req,res){
     
@@ -66,4 +67,39 @@ async function viewSpecficPost(req,res){
 }
 
 
-module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost}
+async function addReview(req,res) {
+
+    let {id} = req.params;
+
+    let postReview = new review({
+        content:req.body.review,
+        owner:req.user.id
+        
+    })
+
+    // let userId = req.user.id
+
+    let userToAddReveiw = await user.findById(req.user.id)
+
+    // console.log(userToAddReveiw)
+
+    userToAddReveiw.reviews.push(postReview)
+    userToAddReveiw.save()
+
+
+
+    let productToAddReview = await product.findById(id)
+    // console.log(productToAddReview)
+    productToAddReview.reviews.push(postReview)
+    productToAddReview.save()
+    postReview.save()
+
+    // console.log(postReview)
+    // console.log(productToAddReview)
+
+    res.redirect(`/user/post/view/${id}`)
+    
+}
+
+
+module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview}

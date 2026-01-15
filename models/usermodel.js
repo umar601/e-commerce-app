@@ -9,9 +9,20 @@ const userSchema = new mongoose.Schema(
             unique:true,
             required:true
         },
-    role: { type: String, default: "user" }
+    role: { 
+        type: String, 
+        default: "user" 
+    },
+    reviews:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"reviews"
+        
     }
-)
+    ]
+
+
+    })
 
 userSchema.plugin(passportMongoose,{usernameField:"email"});
 

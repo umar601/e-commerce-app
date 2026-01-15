@@ -29,6 +29,18 @@
     <a href="">order now</a>
     <a href="/user/post">back</a>
 
+    <h1>reviews</h1>
+    <% if(post.reviews && post.reviews.length>0) {%>
+        <div>
+            
+        </div>
+
+    <% } %>
+    <form action="/user/post/review/<%= post.id %>" method="post">
+        <input type="text" name="review" placeholder="please enter your review.....">
+        <button>submit</button>
+    </form>
+
     
 </body>
 </html>
