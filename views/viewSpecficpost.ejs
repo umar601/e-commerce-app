@@ -31,9 +31,12 @@
 
     <h1>reviews</h1>
     <% if(post.reviews && post.reviews.length>0) {%>
-        <div>
-            
+        <% for(let i=0;i<post.reviews.length;i++){%>
+        <div style="border: 1px solid black;">
+            <p>owner : <%= post.reviews[i].owner.email %></p>
+            <p><%= post.reviews[i].content %></p>
         </div>
+        <% } %>
 
     <% } %>
     <form action="/user/post/review/<%= post.id %>" method="post">

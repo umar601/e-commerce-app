@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const reviews = require("../models/reviewmodel");
+// const reviews = require("../models/reviewmodel");
 
 
 const productSchema = new mongoose.Schema({
@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     reviews:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"reviews"
+            ref:"review"
         }
     ]
 })

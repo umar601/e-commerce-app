@@ -59,7 +59,9 @@ async function viewSpecficPost(req,res){
 
     // console.log(id)
 
-    let post = await product.findById(id);
+    let post = await product.findById(id).populate({path:"reviews",populate:{path:"owner"}})
+
+    // console.log(post)
 
     res.render("viewSpecficpost",{post});
 
