@@ -8,12 +8,12 @@ const uplaod = require("../middlewares/cloudUpload");
 
 function isLogin(req,res,next){
 
-    if(req.user.role!="admin"){
+    console.log(req.user)
 
-        console.log(req.user.role)
+    if(!req.user||req.user.role!="admin"){
 
-
-        req.flash("error","login first");
+    // console.log(req.user.role)
+   req.flash("error","login first");
 
         return res.redirect("/admin/login");
     }
@@ -56,7 +56,7 @@ adminRouter
 .post("/admin/post",isLogin,uplaod.array("images",10),asyncWrap(addingPost))
 
 adminRouter
-.get("/admin/homepage"isLogin,,asyncWrap(adminHomePage))
+.get("/admin/homepage",isLogin,asyncWrap(adminHomePage))
     
 
 

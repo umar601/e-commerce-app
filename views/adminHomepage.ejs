@@ -18,7 +18,7 @@
         <% for (post of allPost) { %>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
-            <a href="post/view/<%= post._id %>" style="text-decoration: none;"><div class="card h-70 shadow-sm" >
+        <a href="post/view/<%= post._id %>" style="text-decoration: none;"><div class="card h-70 shadow-sm" >
 
                 <img src="<%= post.images[0] %>" height="390px" width="100%" alt="cover photo">
 
@@ -44,9 +44,16 @@
                     <% } %>
                 </div>
                 </a>
+                <div class="d-flex justify-content-start w-100">
+            <a href="" class="mb-3 mt-2 badge bg-success ms-2" style="text-decoration: none;width: 67px;">edit</a>
+            <form action="" class="mb-3 mt-2 w-50" style="margin-left:10px;">
+            <button class="badge bg-warning text-dark" style="border: 0px;width: 70px;height: 25px;">delete</button>
+            </form>
+            </div>
 
             </div>
         </div>
+    </a>
 
         <% } %>
 
