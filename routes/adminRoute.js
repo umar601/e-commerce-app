@@ -1,4 +1,4 @@
-const {adminLoginPage,toAddPost,addingPost} = require("../controllers/admincontroller");
+const {adminLoginPage,toAddPost,addingPost,adminHomePage} = require("../controllers/admincontroller");
 const express = require("express");
 const adminRouter = express.Router();
 const passport = require("passport");
@@ -9,6 +9,8 @@ const uplaod = require("../middlewares/cloudUpload");
 function isLogin(req,res,next){
 
     if(req.user.role!="admin"){
+
+        console.log(req.user.role)
 
 
         req.flash("error","login first");
@@ -45,13 +47,16 @@ adminRouter
         // successFlash: "Welcome admin!"
 }),((req,res)=>{
     req.flash("success","login successfull");
-    res.redirect("/admin/post");
+    res.redirect("/admin/homepage");
 }))
 
 
 adminRouter
 .get("/admin/post",isLogin,asyncWrap(toAddPost))
 .post("/admin/post",isLogin,uplaod.array("images",10),asyncWrap(addingPost))
+
+adminRouter
+.get("/admin/homepage"isLogin,,asyncWrap(adminHomePage))
     
 
 

@@ -115,7 +115,8 @@ function middleware(app){
         res.locals.success = req.flash("success");
         res.locals.faliure = req.flash("error");
         res.locals.user = req.user;
-        // console.log(req.user)
+        // console.log(req.user.role)
+        console.log(req.user)
         next();
 
     })

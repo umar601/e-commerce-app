@@ -47,5 +47,16 @@ async function addingPost(req,res){
     res.redirect("/admin/post")
 }
 
+async function adminHomePage(req,res){
 
-module.exports = {adminLoginPage,toAddPost,addingPost};
+    
+    let allPost = await product.find({});
+
+    // console.log(allPost)
+    
+    res.render("adminHomepage.ejs",{allPost});
+
+}
+
+
+module.exports = {adminLoginPage,toAddPost,addingPost,adminHomePage};

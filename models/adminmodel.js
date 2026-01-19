@@ -7,7 +7,9 @@ const adminSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    role: { type: String, default: "admin" }
+    role: { 
+        type: String, 
+        default: "admin" }
 });
 
 
