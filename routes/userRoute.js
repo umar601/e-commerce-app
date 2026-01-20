@@ -2,7 +2,7 @@ const express = require("express");
 
 const userRouter = express.Router();
 
-const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview} = require("../controllers/usercontroller");
+const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview} = require("../controllers/usercontroller");
 
 const passport = require("passport");
 
@@ -62,6 +62,10 @@ userRouter
 userRouter
 .route("/user/post/review/:id")
 .post(isLogin,asyncWrap(addReview))
+
+userRouter
+.delete("/user/post/:id/review/:reviewID",deleteReview)
+
 
 
 module.exports = userRouter;

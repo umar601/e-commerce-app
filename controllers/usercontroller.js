@@ -75,7 +75,8 @@ async function addReview(req,res) {
 
     let postReview = new review({
         content:req.body.review,
-        owner:req.user.id
+        owner:req.user.id,
+        rating:req.body.rating
         
     })
 
@@ -103,5 +104,38 @@ async function addReview(req,res) {
     
 }
 
+async function deleteReview(req,res){
 
-module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview}
+    // console.log("R",typeof(req.params.reviewID))
+    // console.log("i",typeof(req.params.id))
+    
+
+    await review.findByIdAndDelete(req.params.reviewID);   //deleteing review 
+    await product.findByIdAndUpdate(                      //deleteing from product
+        req.params.id,
+        {
+            $pull:
+            {
+                reviews:req.params.reviewID
+            }
+        }
+    )
+
+     await user.findByIdAndUpdate(                      //deleteing from user
+        req.user.id,
+        {
+            $pull:
+            {
+                reviews:req.params.reviewID
+            }
+        }
+    )
+
+    req.flash("success","delete sucessfully ");
+
+    res.redirect(`/user/post/view/${req.params.id}`)
+
+}
+
+
+module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview}
