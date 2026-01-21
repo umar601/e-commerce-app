@@ -138,4 +138,11 @@ async function deleteReview(req,res){
 }
 
 
-module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview}
+async function placeOrder(req,res){
+
+    res.send("order request recieved")
+
+}
+
+
+module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder}

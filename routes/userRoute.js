@@ -2,7 +2,7 @@ const express = require("express");
 
 const userRouter = express.Router();
 
-const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview} = require("../controllers/usercontroller");
+const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder} = require("../controllers/usercontroller");
 
 const passport = require("passport");
 
@@ -64,7 +64,10 @@ userRouter
 .post(isLogin,asyncWrap(addReview))
 
 userRouter
-.delete("/user/post/:id/review/:reviewID",deleteReview)
+.delete("/user/post/:id/review/:reviewID",asyncWrap(deleteReview))
+
+userRouter
+.post("/user/post/view/:id/order",asyncWrap(placeOrder))
 
 
 

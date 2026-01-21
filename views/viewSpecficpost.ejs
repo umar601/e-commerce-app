@@ -28,7 +28,9 @@
     <% } %>
 
     <a href="">add to cart</a>
-    <a href="">order now</a>
+    <form action="/user/post/view/<%= post.id %>/order" method="post">
+    <button>order now</button>
+    </form>
     <a href="/user/post">back</a>
 
     <h1>reviews</h1>
