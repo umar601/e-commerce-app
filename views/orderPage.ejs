@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>specfic post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/starRating.css">
+</head>
+<body>
+    <h1><%= success %></h1>      
+    <h1>place order</h1>
+
+    <form action="/user/post/view/<%= orderPost.id %>/order" class="needs-validation" novalidate method="post">
+        <div>
+            <label class="form-label">name</label>
+            <input type="text" name="name" required class="form-control">
+            <div class="invalid-feedback">Please enter name.</div>
+        </div>
+        <div>
+            <label class="form-label">address</label>
+            <input type="text" name="address" required class="form-control">
+            <div class="invalid-feedback">Please enter address.</div>
+        </div>
+        <div>
+            <label class="form-label">phone no</label>
+            <input type="tel" name="phone" required class="form-control">
+            <div class="invalid-feedback">Please enter phone.</div>
+        </div>
+        <div>
+            <label class="form-label">qunatity</label>
+            <input type="number" name="qunatity" required class="form-control">
+            <div class="invalid-feedback">Please enter Qunatity.</div>
+        </div>
+        <div>
+            <fieldset>please select the payment option :
+            <input type="radio" id="cash" name="payment" value="cash" required>
+            <label for="cash">cash</label>
+            <input type="radio" id="card"name="payment" value="card" required>
+            <label for="card">card</label>
+            </fieldset>
+        </div>
+
+        <button>place order</button>
+        
+        
+    </form>
+
+
+
+
+
+<script src="/common.js"></script>
+     
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>

@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    <h1><%= success %></h1>
     <h1><%= post.title %></h1>
     <% for(pic of post.images ) {%>
         <img src="<%= pic %>" alt="" width="100px" height="100px">
@@ -28,9 +29,7 @@
     <% } %>
 
     <a href="">add to cart</a>
-    <form action="/user/post/view/<%= post.id %>/order" method="post">
-    <button>order now</button>
-    </form>
+    <a href="/user/post/view/<%= post.id %>/order">order now</a>
     <a href="/user/post">back</a>
 
     <h1>reviews</h1>

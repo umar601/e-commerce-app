@@ -2,7 +2,7 @@ const express = require("express");
 
 const userRouter = express.Router();
 
-const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder} = require("../controllers/usercontroller");
+const {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder,savingOrder} = require("../controllers/usercontroller");
 
 const passport = require("passport");
 
@@ -67,8 +67,9 @@ userRouter
 .delete("/user/post/:id/review/:reviewID",asyncWrap(deleteReview))
 
 userRouter
-.post("/user/post/view/:id/order",asyncWrap(placeOrder))
-
+.route("/user/post/view/:id/order")
+.get(asyncWrap(placeOrder))
+.post(asyncWrap(savingOrder))
 
 
 module.exports = userRouter;

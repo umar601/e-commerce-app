@@ -2,6 +2,7 @@
 const user = require("../models/usermodel");
 const product = require("../models/productmodel");
 const review = require("../models/reviewmodel");
+const order = require("../models/ordermodel");
 
 function loginPage (req,res){
     
@@ -140,9 +141,37 @@ async function deleteReview(req,res){
 
 async function placeOrder(req,res){
 
-    res.send("order request recieved")
+    let orderPost = await product.findById(req.params.id);
+
+    // console.log(orderPost)
+ 
+    res.render("orderPage.ejs",{orderPost});
+    
+}
+
+async function savingOrder(req,res){
+
+     let addingProduct=await product.findById(req.params.id);
+
+
+    let addingOrder = new order(
+        {
+            product:addingProduct,
+            owner:req.user.id,
+            quantity:req.body.quantity,
+            price:addingProduct.price,
+            paymentMode:req.body.payment
+
+
+        }
+    )
+
+    await addingOrder.save();
+    req.flash("success","order saved");
+
+    res.redirect(`/user/post/view/${req.params.id}`)
 
 }
 
 
-module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder}
+module.exports = {loginPage,signupPage,usersignup,viewPost,viewSpecficPost,addReview,deleteReview,placeOrder,savingOrder}
